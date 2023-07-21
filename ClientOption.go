@@ -8,6 +8,7 @@ import (
 type clientOption struct {
     Credentials  credentials.TransportCredentials
     Address      string
+    TLSEnable    bool
     TLSSkipCheck bool
 }
 type ClientOption func(option *clientOption)
@@ -22,8 +23,9 @@ func WithConnectAddress(addr string) ClientOption {
         o.Address = addr
     }
 }
-func WithConnectTLSSkipCheck() ClientOption {
+func WithConnectTLSSkipCheck(b bool) ClientOption {
     return func(o *clientOption) {
-        o.TLSSkipCheck = true
+        o.TLSSkipCheck = b
+        o.TLSEnable = true
     }
 }

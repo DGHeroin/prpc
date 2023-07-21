@@ -94,9 +94,9 @@ func (c *client) reconnect() error {
     } else {
         options = append(options, grpc.WithTransportCredentials(c.option.Credentials))
     }
-    if c.option.TLSSkipCheck {
+    if c.option.TLSEnable {
         options = append(options, grpc.WithTransportCredentials(credentials.NewTLS(&tls.Config{
-            InsecureSkipVerify: true, // Skip TLS verification for Cloudflare proxy
+            InsecureSkipVerify: c.option.TLSSkipCheck, // Skip TLS verification for Cloudflare proxy
         })))
     }
     conn, err := grpc.Dial(c.option.Address, options...)
