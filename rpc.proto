@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package prpc;
+option csharp_namespace = "prpc";
+option go_package = "p/pb";
+
+import "google/protobuf/any.proto";
+
+message RPCRequest{
+  string name = 1;
+  google.protobuf.Any data = 2;
+}
+
+message RPCResponse{
+  int32 status = 1;
+  google.protobuf.Any data = 2;
+}
+
+message RPCStreamMessage{
+  google.protobuf.Any data = 1;
+  string name = 2;
+  int32 status = 3;
+}
+
+service RPCService {
+  rpc RequestCall(RPCRequest) returns (RPCResponse) {}
+  rpc Streaming(stream RPCStreamMessage) returns (stream RPCStreamMessage) {}
+}
